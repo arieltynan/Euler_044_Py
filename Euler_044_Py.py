@@ -11,8 +11,8 @@ import math
 
 #Create array of pentagonal numbers
 pentNums = [] #array of pentagonal numbers
-gen = 1000000 #arbitrary range of how many pentnums generated
-Dmin = 10000
+gen = 100000 #arbitrary range of how many pentnums generated
+Dmin = gen*gen
 
 for i in range(0,gen): # number of pentnums generated
     num = int((i+1)*(3*(i+1) - 1)/2)
@@ -21,15 +21,19 @@ for i in range(0,gen): # number of pentnums generated
 
 for a in range(1,gen): #range of values n tested
     for b in range(1,gen):
-        valdif = 1/6 + math.sqrt(abs(2/3*(abs(6*a*b + 3*b*b - b)/2)+1/36))
-        valsum = 1/6 + math.sqrt(abs(2/3*(abs(6*a*b + 3*b*b - b + 6*a*a - 2*a)/2)+1/36))
-        #print(val)
-        if abs(2/3*(6*a*b + 3*b*b - b)/2) > Dmin:
+        penta = int(a*(3*a - 1)/2)
+        pentb = int(b*(3*b - 1)/2)
+        if abs(pentb - penta) > Dmin:
             break
+
         else:
-            if valdif.is_integer() and valsum.is_integer() and abs(6*a*b + 3*b*b - b)/2 < Dmin:
+            #print(penta, pentb)
+            valdif = 1/6 + math.sqrt(abs(2/3*(abs(pentb - penta)+1/36)))
+            valsum = 1/6 + math.sqrt(abs(2/3*(abs(pentb + penta)+1/36)))
+            #print(val)
+            if valdif.is_integer() and valsum.is_integer() and abs(pentb - penta) < Dmin:
                 #Dmin = abs(pentNums[a+1]-pentNums[b+1])
-                print(a, (3*a*a - a)/2, b, (3*b*b - b)/2)
+                print(a, penta, b, pentb)
         
         
         
